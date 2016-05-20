@@ -1,0 +1,12 @@
+.header p {
+  font-style: normal;
+  font-size: 36px;
+  margin: auto;
+  width: 80%;
+}
+
+button {
+  color: Green;
+  font-style: bold;
+  font-size: 125%;
+}

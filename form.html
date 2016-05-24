@@ -2,7 +2,10 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="main.css">
-  </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script type="text/javascript" src="guessingGame.js" >
+    </script> 
+    </head>
   <body>
     <div class="header">
       <p>
@@ -20,16 +23,13 @@
       <form>
 	<label for="guess">Your guess:</label>
 	<input type="text" id="guess">
-	<input type="submit" id="submit_guess">
-	<p></p>
-	<p id="feedback">
-	  You have not guessed yet.
-	</p>
-	<p id="counter">
-	  You have 5 guesses left.
-	</p>
-	<button type="button">Give me a hint</button>
-	<button type="button">Let's start over</button>
+	<input type="submit" id="submit_guess" >
+	<button type="button" id="cheat">submit cheater</button>
+  <p></p>
+	<p id="feedback">empty</p>
+	<p id="counter">empty</p>
+	<button type="button" id="hint">Give me a hint</button>
+	<button type="button" id="playAgain">Let's start over</button>
 
 	
       </form>

@@ -7,6 +7,18 @@
 
 button {
   color: Green;
-  font-style: bold;
+  font-weight: bold;
   font-size: 125%;
+}
+
+.winning {
+	font-size: 200%;
+	color: green;
+	font-weight: bold;
+}
+.losing {
+	font-size: 150%;
+	color: red;
+	font-weight: bold;
+	font-style: italic;
 }

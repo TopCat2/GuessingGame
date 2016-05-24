@@ -17,15 +17,25 @@ function generateWinningNumber(){
 
 }
 
-function showFeedback(str) {
-	$("#feedback").text(str);
-}
-function showRemaining(cnt) {
-	if (cnt > 0 | playersGuess == winningNumber) {
-		$("#counter").text("You have " + remainingGuesses 
-			+ " guesses left.");
+function showFeedback(str, add) {
+	var fb = $("#feedback");
+	fb.text(str);
+	if (add == undefined  | !add) {
+		fb.removeClass("winning");
 	} else {
-		$("#counter").text("Sorry, play again.");
+		fb.addClass("winning");
+	}
+}
+
+function showRemaining(cnt) {
+	var counter = $("#counter");
+	if (cnt > 0 | playersGuess == winningNumber) {
+		counter.text("You have " + remainingGuesses 
+			+ " guesses left.");
+		counter.removeClass("losing");
+	} else {
+		counter.text("Sorry, play again.");
+		counter.addClass("losing");
 	}
 }
 
@@ -41,7 +51,6 @@ function playersGuessSubmission(event){
 	var guess = $("#guess");
 	// Snag the guess and clear the input
 	playersGuess = +guess.val();
-	console.log("Player guessed " + playersGuess);
 	$(guess).val("");
 
 	checkGuess();
@@ -94,7 +103,8 @@ function checkGuess(){
 	// Show the win or play-on message
 	showRemaining(remainingGuesses);
 	if (playersGuess == winningNumber) {
-		showFeedback("You have won!  The number was " + winningNumber + ".");
+		showFeedback("You have won!  The number was " 
+			+ winningNumber + ".", true);
 	} else {
 		showFeedback(guessMessage(winningNumber, playersGuess));
 	}
@@ -103,7 +113,18 @@ function checkGuess(){
 // Create a provide hint button that provides additional clues to the "Player"
 
 function provideHint(){
-	showFeedback("A hint?  You want a hint?  $18,000 for this course, you work it out!")
+	// How wide the hint range is, based on guesses left
+	// This is distorted by hitting 0 and 101, but I didn't
+	// want to put the time into fixing this.
+	var range = (2 * remainingGuesses) +
+		Math.floor(Math.random() * remainingGuesses * 5);
+	var below = Math.floor(Math.random() * range);
+	var above = Math.floor(Math.random() * range);
+
+	var low = Math.max(0, winningNumber - below);
+	var high = Math.min(100, winningNumber + above);
+	showFeedback("A hint?  You want a hint?  $18,000 for this course, you can't work it out?"
+		+ " All right, it's between " + low + " and " + high + ".");
 }
 
 // Allow the "Player" to Play Again
@@ -115,17 +136,14 @@ function playAgain(){
 	playersGuess = -7;	// Dummy value for previous guess
 	showFeedback("You have not guessed yet.");
 	showRemaining(remainingGuesses);
-	console.log("New game started.  Winning number is " + winningNumber);
 }
 
 
 /* **** Event Listeners/Handlers ****  */
 $(document).ready(function() {
 	playAgain();
-	console.log("Document is ready.  Winning number is " + winningNumber);
 
 	$("#playAgain").on('click', playAgain);
-	$("#cheat").on('click', playersGuessSubmission);
 	$("form").submit(playersGuessSubmission);
 	$("#hint").on('click', provideHint);
 });
